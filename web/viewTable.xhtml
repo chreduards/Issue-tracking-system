@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    
+    <h:head>
+        <title>IT Support Employee UI</title>
+       <h:outputStylesheet library="css" name="table-style.css"  /> 
+    </h:head>
+    <h:body>
+        <h:form rendered ="#{not empty bean.list}">
+            <h:dataTable value ="#{bean.list}" var="item"
+                styleClass="order-table"
+    		headerClass="order-table-header"
+    		rowClasses="order-table-odd-row,order-table-even-row">  
+                <h:column> <f:facet name ="header">Task Name</f:facet>#{item.taskName}</h:column>
+                <h:column> <f:facet name ="header">TaskID</f:facet>#{item.taskID}</h:column>
+                <h:column><f:facet name="header">Support ID</f:facet>#{item.suppID}</h:column>
+                <h:column><f:facet name="header">CostPerHour</f:facet>#{item.costPerHour}</h:column>
+                <h:column> <f:facet name ="header">Budgeted Time</f:facet>#{item.budgetedTime}</h:column>
+                <h:column><f:facet name="header">Duration</f:facet>#{item.duration}</h:column>
+                <h:column><f:facet name="header">Status</f:facet>#{item.status}</h:column>
+                <h:column><f:facet name="header">Comments</f:facet>
+                    <h:inputTextarea rows="5" cols="40" value="#{item.comments}" readonly="true"></h:inputTextarea>
+                </h:column>
+                <h:column><h:outputText value="&#160;" /></h:column>
+                <h:column><h:commandButton value="Edit" action="#{bean.edit(item)}" /></h:column>
+            </h:dataTable>
+        </h:form>    
+        <h:panelGroup rendered="#{bean.edit}">
+            <h3>Edit task with taskID: #{bean.tm.taskID}</h3>
+            <h:form>
+                <p>Support ID: <h:inputText value="#{bean.tm.suppID}" /></p>
+                <p>CostPerHour: <h:inputText value="#{bean.tm.costPerHour}" /></p>
+                <p>Duration: <h:inputText value="#{bean.tm.duration}" /></p>
+                <p>Status: <h:selectOneMenu value = "#{bean.tm.status}">
+                        <f:selectItem itemValue = "Pending" itemLabel="Pending"></f:selectItem>
+                        <f:selectItem itemValue = "Started" itemLabel="Started"></f:selectItem>
+                        <f:selectItem itemValue = "Finished" itemLabel="Finished"></f:selectItem>
+                    </h:selectOneMenu></p>
+                 <p>Comments: <h:inputTextarea rows="5" cols="40" value="#{bean.tm.comments}" /></p>
+                <p><h:commandButton value="Save" action="#{bean.save}" /></p>
+            </h:form>
+        </h:panelGroup>
+        <br/>
+        <h:form>
+            <h:commandButton action ="#{bean.getSearchPage}" value="Back"></h:commandButton>
+        </h:form>
+    </h:body>
+</html>
+
